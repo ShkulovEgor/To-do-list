@@ -1,0 +1,22 @@
+﻿@{
+    ViewBag.Title = "AddTask";
+}
+
+<div class="row">
+    <div class="col-md-5">
+        <h3>Создание задачи</h3>
+        <br />
+        @using (Html.BeginForm("SaveTask", "Home", FormMethod.Post, new { enctype = "multipart/form-data" }))
+        {
+            <label>Название задачи:</label>
+            <input type="text" class="form-control" name="name" /><br />
+            <label>Описание:</label>
+            <textarea class="form-control" name="description" rows="2"></textarea><br />
+            <label>Дата окончания задачи:</label>
+            <input type="date" class="form-control" name="enddate" value="2021-01-01" /><br />
+            <label>Загрузить файл:</label>
+            <input type="file" name="upload" /><br />
+            <input type="submit" class="btn btn-primary" value="Добавить" />
+        }
+    </div>
+</div>

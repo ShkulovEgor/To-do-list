@@ -1,0 +1,81 @@
+﻿@{
+    ViewBag.Title = "Главная страница";
+    List<Task> tasks = ViewBag.tasks;
+    string error = "";
+    if (ViewBag.Error != null)
+    {
+        error = ViewBag.Error;
+    }
+}
+
+@using ToDoWebApplication.Models;
+
+<br />
+<div class="row">
+    <div class="col-md-8">
+        <br />
+        @if (error != "")
+        {
+            <div class="panel panel-danger">
+                <div class="panel-heading">
+                    @error
+                </div>
+            </div>
+        }
+        <h2>Поиск</h2>
+        @using (Html.BeginForm("Search", "Home", FormMethod.Get))
+        {
+            <input type="text" class="form-control pull-left" name="query" />
+            <input type="submit" class="btn btn-primary pull-left btn-spacing" value="Поиск" />
+        }
+        <br /><br />
+        <h2>Список файлов</h2>
+        @using (Html.BeginForm("AddTask", "Home", FormMethod.Get))
+        {
+            <input type="submit" class="btn btn-default pull-right" value="Добавить" />
+            <br />
+        }
+        @if (tasks != null)
+        {
+            <br />
+            foreach (Task task in tasks)
+            {
+                <div class="panel panel-default">
+                    <div class="panel-heading">
+                        <div class="panel-title pull-left">
+                            @task.Name
+                        </div>
+                        <div class="panel-title pull-right">
+                            @using (Html.BeginForm("Delete", "Home", FormMethod.Post))
+                            {
+                                <input type="hidden" name="id" value="@task.Id" />
+                                <input type="submit" class="btn btn-danger pull-left btn-spacing" value="Удалить" />
+                            }
+                        </div>
+                        <div class="panel-title pull-right">
+                            @using (Html.BeginForm("Download", "Home", FormMethod.Get))
+                            {
+                                <input type="hidden" name="id" value="@task.Id" />
+                                <input type="submit" class="btn btn-primary pull-left btn-spacing" value="Скачать файл" />
+                            }
+                        </div>
+                        <div class="panel-title pull-right">
+                            @using (Html.BeginForm("Edit", "Home", FormMethod.Get))
+                            {
+                                <input type="hidden" name="id" value="@task.Id" />
+                                <input type="submit" class="btn btn-info pull-right btn-spacing" value="Редактировать" />
+                            }
+                        </div>
+                        <div class="clearfix"></div>
+                    </div>
+                    <div class="panel-body">
+                        <p class="pull-left">Начало задачи: @task.StartDate.ToString("dd.MM.yyyy")</p>
+                        <p class="pull-right">Окончание задачи: @task.EndDate.ToString("dd.MM.yyyy")</p>
+                        <br /><br />
+                        <p><b>Описание:</b> @task.Description</p>
+                    </div>
+                </div>
+            }
+        }
+    </div>
+</div>

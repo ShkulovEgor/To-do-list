@@ -1,0 +1,29 @@
+﻿@{
+    ViewBag.Title = "Редактировать задачу";
+    Task task = ViewBag.Task;
+}
+
+@using ToDoWebApplication.Models;
+
+<div class="row">
+    <div class="col-md-3">
+        <h2>Редактирование</h2>
+        <br />
+        @using (Html.BeginForm("SaveChanges", "Home", FormMethod.Post))
+        {
+            <input type="hidden" name="id" value="@task.Id" />
+            <label>Название задачи:</label>
+            <input type="text" class="form-control" name="name" value="@task.Name" /><br />
+            <label>Описание:</label>
+            <textarea class="form-control" rows="2" name="description">@task.Description</textarea><br />
+            <label>Дата окончания задачи:</label>
+            <input type="date" class="form-control" name="enddate" value="@task.EndDate" /><br />
+            <input type="submit" class="btn btn-primary pull-left" value="Сохранить" />
+        }
+        @using (Html.BeginForm("Index", "Home", FormMethod.Get))
+        {
+            <input type="submit" class="btn btn-default pull-right" value="Назад" />
+        }
+    </div>
+</div>
+
